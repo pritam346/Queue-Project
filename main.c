@@ -1,130 +1,113 @@
-//Queue Project
+// Stack using C
 #include <stdio.h>
 #include <stdlib.h>
 #define SIZE 5
-int is_empty();
-int is_full();
-void enqueue(int);
-int dequeue();
-void display();
+//Stack
+int stack[SIZE];
+int top=-1;
 
-int queue[SIZE],front = -1,rear =-1;
+// Function Prototype
+void push(int);
+void pop();
+void display();
 int i;
+//drivers code
 int main()
 {
-    int choice,data,ret;
+    int choice,data;
     while(1)
-      {
-    printf("\nEnter \n\n 1. For Enqueue \n 2. For Dequeue \n 3. For Display \n 4. For exit \n\n Enter your choice: ");
+    {
+    printf("\nEnter \n\n 1. For Push \n 2. For Pop \n 3. For Peek \n 4. For Display \n 5. For exit \n\n Enter your choice: ");
     scanf("%d",&choice);
     switch(choice)
         {
         case 1:
             {
-                printf("\nEnter data:");
-                scanf("%d",&data);
-                enqueue(data);
-                break;
+            printf("\nEnter data: ");
+            scanf("%d",&data);
+            push(data);
+            break;
             }
         case 2:
             {
-                ret=dequeue();
-                if(ret != 0)
-                {
-                     printf("\n%d is dequeued successfully.",ret);
-                }
-                break;
+            pop();
+            break;
             }
         case 3:
+            {
+                if(!is_empty())
+                {
+                     printf("\nTop element is %d",stack[top]);
+                }
+                else
+                    printf("\n Stack is empty");
+               break;
+            }
+        case 4:
             {
                 display();
                 break;
             }
-        case 4:
+        case 5:
             {
-                printf("\nExited from the system.\n");
                 exit(0);
+                break;
             }
         default:
             {
-                printf("\nInvalid Operator");
+                printf("\nInvalid Choice .........");
             }
         }
-      }
+    }
     return 0;
 }
 int is_full()
 {
-    if(rear == SIZE-1)
-    {
+    if(top==SIZE-1)
         return 1;
-    }
     else
-    {
         return 0;
-    }
 }
 int is_empty()
 {
-    if(front ==-1 && rear == -1)
-    {
+    if(top==-1)
         return 1;
-    }
     else
-    {
         return 0;
-    }
 }
-void enqueue(int value)
+void push(int value)
 {
     if(is_full())
     {
-        printf("\nQueue Overflow\n");
+        printf("\nStack Overflow\n");
         return;
     }
-    else if(is_empty())
-    {
-        front++;
-        rear++;
-        queue[rear]=value;
-    }
-    else
-    {
-        rear++;
-        queue[rear]=value;
-    }
-    printf("\n%d is enqueued successfully.",value);
+    top++;
+    stack[top]=value;
+    printf("\n%d is pushed successfully.\n",stack[top]);
 }
-int dequeue()
+void pop()
 {
     if(is_empty())
     {
-        printf("\nQueue Underflow.");
-        return 0;
+        printf("\nStack Underflow");
+        return;
     }
-    else if(rear == front)
-    {
-        int f=queue[front];
-        front = -1;
-        rear = -1;
-        return f;
-    }
-    else
-    {
-        return queue[front++];
-    }
+    printf("\n%d is popped Successfully.\n",stack[top]);
+    top--;
 }
 void display()
 {
-    if(is_empty())
     {
-        printf("\nQueue is empty\n");
-    }
-    else
-    {
-    for(i=front;i<=rear;i++)
-    {
-        printf("\n%d",queue[i]);
-    }
+        if(is_empty())
+        {
+            printf("\nStack is Empty");
+        }
+        else
+            printf("\nElements on the stack are: \t");
+        for(i=0;i<=top;i++)
+        {
+            printf("\n%d",stack[i]);
+        }
     }
 }
